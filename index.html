@@ -56,6 +56,28 @@
     <!-- Scripts -->
     <script>
       // Code goes here...
+      let inputs = document.querySelectorAll("input, textarea");
+
+      for (var i = 0; i < inputs.length; i++) {
+        // Check for saved data in localStorage
+        var saved = localStorage.getItem("formAutosaveData_" + inputs[i].id);
+        if (!saved) continue;
+
+        // Update the input value
+        inputs[i].value = saved;
+      }
+
+      // save form data to localstorage
+      document.addEventListener(
+        "input",
+        function(event) {
+          localStorage.setItem(
+            "formAutosaveData_" + event.target.id,
+            event.target.value
+          );
+        },
+        false
+      );
     </script>
   </body>
 </html>
