@@ -58,13 +58,19 @@
       // Code goes here...
       let inputs = document.querySelectorAll("input, textarea");
 
-      for (var i = 0; i < inputs.length; i++) {
-        // Check for saved data in localStorage
-        var saved = localStorage.getItem("formAutosaveData_" + inputs[i].id);
-        if (!saved) continue;
+      // check for existing data in local storage
+      var saved = localStorage.getItem("formAutosaveData");
 
-        // Update the input value
-        inputs[i].value = saved;
+      if (saved) {
+        saved = JSON.parse(saved);
+
+        for (var i = 0; i < inputs.length; i++) {
+          var val = saved[inputs[i].id];
+
+          if (!val) continue;
+
+          inputs[i].value = val;
+        }
       }
 
       // save form data to localstorage
