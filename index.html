@@ -71,10 +71,18 @@
       document.addEventListener(
         "input",
         function(event) {
-          localStorage.setItem(
-            "formAutosaveData_" + event.target.id,
-            event.target.value
-          );
+          // Get current data from localStorage
+          var saved = localStorage.getItem("formAutosaveData");
+
+          // If there's existing data, convert to an object
+          // Otherwise, create a new one
+          saved = saved ? JSON.parse(saved) : {};
+
+          // Push field value to saved data object
+          saved[event.target.id] = event.target.value;
+
+          // Save data back down to localStorage
+          localStorage.setItem("formAutosaveData", JSON.stringify(saved));
         },
         false
       );
